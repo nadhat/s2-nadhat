@@ -1,6 +1,6 @@
 # s2-nadhat
 ## Scratch 2 Extension For The Nadhat GSM/GPRS board on Raspberry Pi
-![](https://github.com/MrYsLab/s2-pi/blob/master/docs/images/logo.png)
+![](https://github.com/nadhat/s2-nadhat/blob/master/docs/images/logo.png)
 
 To install type:
 
