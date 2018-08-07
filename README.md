@@ -11,5 +11,5 @@ sudo pip3 install s2-nadhat
 This extension have been created thanks to [MrYsLab s2-pi tutorial](https://mryslab.github.io/s2-pi/).
 
 This project has been crafted with [Pycharm](https://www.jetbrains.com/pycharm/)
-![](https://github.com/nadhat/s2-python/blob/master/docs/images/pycharm_logo.png)
+![](https://github.com/mryslab/s2-python/blob/master/docs/images/pycharm_logo.png)
 

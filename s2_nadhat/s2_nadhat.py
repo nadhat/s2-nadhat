@@ -40,44 +40,14 @@ class S2Nadhat(WebSocket):
         print(payload)
         client_cmd = payload['command']
         # When the user wishes to set a pin as a digital Input
-        if client_cmd == 'input':
-            pin = int(payload['pin'])
-            self.pi.set_glitch_filter(pin, 20000)
-            self.pi.set_mode(pin, pigpio.INPUT)
-            self.pi.callback(pin, pigpio.EITHER_EDGE, self.input_callback)
-        # when a user wishes to set the state of a digital output pin
-        elif client_cmd == 'digital_write':
-            pin = int(payload['pin'])
-            self.pi.set_mode(pin, pigpio.OUTPUT)
-            state = payload['state']
-            if state == '0':
-                self.pi.write(pin, 0)
-            else:
-                self.pi.write(pin, 1)
-        # when a user wishes to set a pwm level for a digital input pin
-        elif client_cmd == 'analog_write':
-            pin = int(payload['pin'])
-            self.pi.set_mode(pin, pigpio.OUTPUT)
-            value = int(payload['value'])
-            self.pi.set_PWM_dutycycle(pin, value)
-        # when a user wishes to output a tone
-        elif client_cmd == 'tone':
-            pin = int(payload['pin'])
-            self.pi.set_mode(pin, pigpio.OUTPUT)
-
-            frequency = int(payload['frequency'])
-            frequency = int((1000 / frequency) * 1000)
-            tone = [pigpio.pulse(1 << pin, 0, frequency),
-                    pigpio.pulse(0, 1 << pin, frequency)]
-
-            self.pi.wave_add_generic(tone)
-            wid = self.pi.wave_create()
-
-            if wid >= 0:
-                self.pi.wave_send_repeat(wid)
-                time.sleep(1)
-                self.pi.wave_tx_stop()
-                self.pi.wave_delete(wid)
+        if client_cmd == 'send_sms':
+            sms_text_out = payload['sms_text']
+            phone_number_out = payload['phone_number']
+            sms_mode = payload['normal']
+            # code to write SMS there
+            #
+            #
+            # end of code to write SMS there
         elif client_cmd == 'ready':
             pass
         else:
@@ -86,7 +56,7 @@ class S2Nadhat(WebSocket):
     # call back from pigpio when a digital input value changed
     # send info back up to scratch
     def input_callback(self, pin, level, tick):
-        payload = {'report': 'digital_input_change', 'pin': str(pin), 'level': str(level)}
+        payload = {'report': 'incoming_sms', 'from': , 'content': str(level)}
         print('callback', payload)
         msg = json.dumps(payload)
         self.sendMessage(msg)
@@ -102,21 +72,9 @@ class S2Nadhat(WebSocket):
 def run_server():
     # checking running processes.
     # if the backplane is already running, just note that and move on.
+    # add gammu-smsd deamon check
 
-    found_pigpio = False
     found_gammu-smsd = False
-
-    for pid in psutil.pids():
-        p = psutil.Process(pid)
-        if p.name() == "pigpiod":
-            found_pigpio = True
-            print("pigpiod is running")
-        else:
-            continue
-
-    if not found_pigpio:
-        call(['sudo', 'pigpiod'])
-        print('pigpiod has been started')
 
     # add gammu-smsd deamon check
     for pid in psutil.pids():
