@@ -1,4 +1,4 @@
-site_name: s2-pi
+site_name: s2-nadhat
 pages:
-    - Create Your Own Scratch2 Extensions: index.md
+    - Scratch 2 Extension For The Nadhat GSM/GPRS board on Raspberry Pi: index.md
 theme: readthedocs
